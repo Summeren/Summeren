@@ -7,18 +7,18 @@
 
     <meta name="author" content="heng" />
     <meta name="robots" content="index, follow"/>
-    <meta name="keywords" content="article" />
+    <meta name="keywords" content="article, pelican, publishing" />
 
-    <meta property="og:title" content="about"/>
-    <meta property="og:url" content="./about.html"/>
+    <meta property="og:title" content="发布博客"/>
+    <meta property="og:url" content="./my-pelican-blog.html"/>
     <meta property="og:site_name" content="heng"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:image" content=".image/pusheencat.png" />
-    <meta property="og:description" content="关于我" />
+    <meta property="og:image" content=".https://github.com/Samael500/w3-personal-blog/raw/master/readme_img/article_info.png" />
+    <meta property="og:description" content="那么，到底该怎么发布博客呢？" />
 
-    <link rel="canonical" href="./about.html" />
+    <link rel="canonical" href="./my-pelican-blog.html" />
 
-    <title>about | heng</title>
+    <title>发布博客 | heng</title>
 
     <link rel="stylesheet" type="text/css" href="/theme/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/font-awesome.css" />
@@ -53,7 +53,7 @@
                 <ul>
                         <li >
                             <a href="/">HOME</a></li>
-                        <li class="active">
+                        <li >
                             <a href="/about.html">ABOUT</a></li>
 
                     <div class="clearfix"></div>
@@ -80,27 +80,35 @@
 
         <header>
 <h4>
-    <a href="./about.html" title="about">about</a>
-     4月 01, 2014
+    <a href="./my-pelican-blog.html" title="发布博客">发布博客</a>
+     4月 01, 2015
 </h4>
 
 <div class="footer art-info">
 
         Author: <a class="url fn" href="./author/apple.html">Apple</a> |
 
-    Category: <a href="./category/misc.html">misc</a>
+    Category: <a href="./category/python.html">Python</a>
 
 
 
     
 
+        <br />
+        Tags:         <a href="./tag/pelican.html">pelican</a>
+        <a href="./tag/publishing.html">publishing</a>
 
 </div>        </header>
 
         <article class="content">
 
 
-            <p>想好了再补充。</p>
+            <h1>没有前言，没有概述，做个笔记而已。</h1>
+<h2>1 在<code>content</code>目录里新建 <code>.py</code> 文件，写完之后执行<code>pelican content</code>，生成页面。</h2>
+<h2>2 <code>cd</code> 到<code>output</code>里 执行<code>python -m pelican.server</code>。</h2>
+<h2>3 <code>localhost:8000</code> 查看效果。</h2>
+<h2>4 <code>cd</code>到<code>blog</code>的根目录，执行 <code>sh push_to.sh</code>。</h2>
+<h2>最后，记得也要把<code>blog</code>的<code>content</code>也<code>push</code>到<code>github</code>上。</h2>
 
         </article>
 
