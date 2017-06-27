@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+  <meta charset="utf-8">
+  
+  <title>Java 并发编程读书笔记(基础篇) | Apple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="基础篇，从各种概念开始。线程安全 当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 并发编程读书笔记(基础篇)">
+<meta property="og:url" content="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/index.html">
+<meta property="og:site_name" content="Apple">
+<meta property="og:description" content="基础篇，从各种概念开始。线程安全 当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
+<meta property="og:updated_time" content="2017-06-27T23:48:39.741Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 并发编程读书笔记(基础篇)">
+<meta name="twitter:description" content="基础篇，从各种概念开始。线程安全 当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
+  
+    <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+      <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+  
+  
+      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+  
+  <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false,
+          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+          search: undefined
+      }
+  </script>
+
+  
+      <script>
+          yiliaConfig.jquery_ui = [false];
+      </script>
+  
+
+  
+      <script>
+          yiliaConfig.rootUrl = "/";
+      </script>
+  
+
+  
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars2.githubusercontent.com/u/12403606?v=3&amp;s=460" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Apple</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cache/">Cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Guava/">Guava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JDBC/">JDBC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-编程/">Java 编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello/">hello</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timer/">timer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xStream/">xStream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">Apple</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Apple</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars2.githubusercontent.com/u/12403606?v=3&amp;s=460" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Apple</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Java-compli-read-notes-basis" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/01/Java-compli-read-notes-basis/" class="article-date">
+      <time datetime="2016-06-01T15:15:45.000Z" itemprop="datePublished">2016-06-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java 并发编程读书笔记(基础篇)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="基础篇，从各种概念开始。"><a href="#基础篇，从各种概念开始。" class="headerlink" title="基础篇，从各种概念开始。"></a>基础篇，从各种概念开始。</h1><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><ul>
+<li>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。<a id="more"></a></li>
+<li>在线程安全类中封装来必要的同步机制，因此客户端无须进一步采取同步措施。</li>
+<li>无状态对象一定是线程安全的。<br>在并发编程中，这种由于不恰当的执行时序而出现的不正确的结果是一种非常重要的情况，它有一个正式的名字：<strong>竞态条件</strong>。</li>
+</ul>
+<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><p>作为一个不可分割的操作来执行。我们所熟知的 <strong>++i</strong> 并不是一个原子操作，它实际上是一个 <em>*¨读取 i 值 – 修改 i 值 – 写入 i 值¨</em> 的操作序列，并且其结果依赖于之前的状态。</p>
+<h2 id="内置锁"><a href="#内置锁" class="headerlink" title="内置锁"></a>内置锁</h2><p>每个 Java 对象都可以用做一个实现同步的锁，这些锁被称为内置锁(Inteinsic Lock)或者监视器锁(Monitor Lock)。获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法。Java 的内置锁相当于一种互斥体(互斥锁)，这意味着最多只有一个线程能持有这种锁。</p>
+<h2 id="重入"><a href="#重入" class="headerlink" title="重入"></a>重入</h2><p>当某个线程请求一个由其他线程持有的锁是，发出请求的线程就会阻塞。¨重入¨ 意味着获取锁的操作的粒度是¨线程¨，而不是¨调用¨。重入的一种实现方法是，为每个锁关联一个获取计数值和一个所有者线程。</p>
+<h2 id="Volatile-关键字"><a href="#Volatile-关键字" class="headerlink" title="Volatile 关键字"></a>Volatile 关键字</h2><p>Java 语言提供来一种弱同步机制，即 volatile 变量，用来确保变量的更新操作通知到其他线程。<br>仅当 volatile 变量能简化代码的实现以及对同步策略的验证时，才应该使用它们。如果在验证正确性时需要对可见性进行复杂的判断，那么就不要使用 volatile 变量。volatile 变量的正确使用方式包括：确保它们自身状态的可见性，确保它们锁引用对象的状态的可见性，以及标识一些重要的程序生命周期事件的发生。</p>
+<h2 id="发布与逸出"><a href="#发布与逸出" class="headerlink" title="发布与逸出"></a>发布与逸出</h2><p>发布一个对象的意思是指，使对象能够在当前作用域之外的代码中使用。一般来说，如果一个已经发布的对象能够通过非私有的变量引用和方法调用到达其他对象，那么这些对象也都会被发布。<br>当某个不应该发布的对象被发布时，就称为逸出。</p>
+<h2 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h2><p>线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由该线程修改。</p>
+<h3 id="Ad-hoc-线程封闭"><a href="#Ad-hoc-线程封闭" class="headerlink" title="Ad-hoc 线程封闭"></a>Ad-hoc 线程封闭</h3><p>Ad-hoc 线程封闭是指，维护线程封闭性的职责完全由程序实现来承担。</p>
+<h3 id="栈封闭"><a href="#栈封闭" class="headerlink" title="栈封闭"></a>栈封闭</h3><p>栈封闭是线程封闭的一种特例，在栈封闭中，只能通过局部变量才能访问对象。栈封闭比 Ad-hoc 线程封闭更易于维护，也更健壮。</p>
+<h3 id="ThreadLocal-类"><a href="#ThreadLocal-类" class="headerlink" title="ThreadLocal 类"></a>ThreadLocal 类</h3><p>维持线程封闭性的一种更规范方法是使用 ThreadLocal，这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal 对象通常用于防止对可变的单实例变量或全局变量进行共享。</p>
+<h2 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h2><p>如果某个对象在被创建后其状态就不能被修改，那么这个对象就称为不可变对象。<br><strong>不可变对象一定是线程安全的</strong>。</p>
+<p>当满足一下条件时，对象才是不可变的：</p>
+<ul>
+<li>对象创建以后其状态就不能被修改。</li>
+<li>对象的所有域都是 final 类型。</li>
+<li>对象是正确创建的(在对象创建期间，this 引用没有逸出)。</li>
+</ul>
+<h3 id="Final-域"><a href="#Final-域" class="headerlink" title="Final 域"></a>Final 域</h3><p>final 域能确保初始化过程的安全性，从而可以不受限制的访问不可变对象，并在共享这些对象时无须同步。</p>
+<p>要安全地发布一个对象，对象的引用以及对象的状态必须同事对其他线程可见。一个正确构造的对象可以通过以下方式来安全地发布：</p>
+<ul>
+<li>在静态初始化函数中初始化一个对象引用。</li>
+<li>将对象的引用保存到 olatile 类型的域或者 AtomicReferance 对象中。</li>
+<li>将对象的引用保存到某个正确构造对象的 final 类型域中。</li>
+<li>将对象的引用保存到一个由锁保护的域中。</li>
+</ul>
+<p>线程安全库中的容器类提供以下安全发布保证：</p>
+<ul>
+<li>通过将一个键或者值放入 Hashtable、sychronziedMap 或者 ConcurrentMap 中，可以安全地将它发布给任何从这些容器中访问它的线程（无论是直接访问还是通过迭代器访问）。</li>
+<li>通过将某个元素放入 Vector、CopyOnWriteArrayList、CopyWriteArraySet、synchronizedist 或 synchroizedSet 中，可以将该元素安全地发布到任何从这些容器中访问该元素的线程。</li>
+<li>通过将某个元素放入 BlockingQueue 或者 ConcurrentLinkedQueue 中，可以将该元素安全地发布到任何从这些队列中访问该元素的线程。</li>
+</ul>
+<p>对象的发布需求取决于它的可变性：</p>
+<ul>
+<li>不可变对象可以通过任意机制来发布。</li>
+<li>事实不可变对象必须通过安全方式来发布。</li>
+<li>可变对象必须通过安全方式来发布，并且必须是线程安全的或者由某个锁保护起来。</li>
+</ul>
+<p>在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：<br><strong>线封闭</strong> 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改。<br><strong>只读共享</strong> 在没有额外同步的情况下，共享的只对对象可以由多个线程并发访问，但任何线程都不能修改它。共享只读对象包括不可变对象和事实不可变对象。<br><strong>线程安全共享</strong> 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。<br><strong>保护对象</strong> 被保护的对象只能通过持有特定的锁来访问。保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且有某个特定锁保护的对象。</p>
+<p>在设计线程安全类的过程中，需要包含一下三个基本要素：</p>
+<ul>
+<li>找出构成对象状态的所有变量。</li>
+<li>找出约束状态变量的不变性条件。</li>
+<li>建立对象状态的并发访问管理策略。</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>可变状态是至关重要的。<br>所有的并发问题都可以归结为如何协调对并发状态的访问。可变状态越少，就越容易确保线程的安全性。</li>
+<li>尽量将域声明为 final 类型，除非需要它们是可变的。</li>
+<li>不可变对象一定是线程阿安全的。<br>不可变对象能极大地降低并发编程到的复杂性。它们更为简单而且安全，可以任意共享而无须使用加锁或保护性复制等机制。</li>
+<li>封装有助于管理复杂性。<br>将数据封装在对象中，更易于维持不变性条件，将同步机制封装在对象中，更易于遵循同步策略。</li>
+<li>用锁来保护每个可变变量。</li>
+<li>当保护用一个不变性条件中的所有变量时，要使用同一个锁。</li>
+<li>在执行符合操作期间，要持有锁。</li>
+<li>如果从多线程中访问同一个可变变量时没有同步机制，那么程序会出现问题。</li>
+<li>不要故作聪明地推断出不需要使用同步。</li>
+<li>在设计过程中考虑线程安全，或者文档中明确指出它不是线程安全的。</li>
+<li>将同步策略文档化。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
+        <p><span>发布时间:</span>2016-06-01, 23:15:45</p>
+        <p><span>最后更新:</span>2017-06-28, 07:48:39</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/06/01/Java-compli-read-notes-basis/" title="Java 并发编程读书笔记(基础篇)">http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/06/06/spring-data-mongodb/">
+                    SpringMVC 整合Mongodb
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/06/01/MySQL-batch-insert/">
+                    MySQL 入库操作的优化
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Final-域"><span class="toc-number">1.8.1.</span> <span class="toc-text">Final 域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">1.9.</span> <span class="toc-text">小结</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java 并发编程读书笔记(基础篇)　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'winteren'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/06/06/spring-data-mongodb/" title="上一篇: SpringMVC 整合Mongodb">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/06/01/MySQL-batch-insert/" title="下一篇: MySQL 入库操作的优化">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/XStream/">XStream 之 JavaBean 与 XML 相互转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/04/double-data-source/">Tomcat JDBC Pool 多数据源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/27/spring-task/">Spring 定时器的两种简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/JVM-read-notes/">深入理解 Java 虚拟机 读书笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/timer-grammar-xml/">定时器语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/06/spring-data-mongodb/">SpringMVC 整合Mongodb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/MySQL-batch-insert/">MySQL 入库操作的优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/11/19/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/04/01/pelican-blog/">发布pelican博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/11/19/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Apple
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.0">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 10;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

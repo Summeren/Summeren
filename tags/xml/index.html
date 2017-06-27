@@ -9,11 +9,11 @@
 
   <meta charset="utf-8">
   
-  <title>Apple</title>
+  <title>Tag: xml | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="Apple">
-<meta property="og:url" content="http://blog.xueni.ren/index.html">
+<meta property="og:url" content="http://blog.xueni.ren/tags/xml/index.html">
 <meta property="og:site_name" content="Apple">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apple">
@@ -32,13 +32,8 @@
   
   <link rel="stylesheet" href="/css/style.css">
   
-      <style> .article { opacity: 0;} </style>
-  
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
-    
-    
   
   
       <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
@@ -49,10 +44,10 @@
       var yiliaConfig = {
           fancybox: true,
           animate: true,
-          isHome: true,
+          isHome: false,
           isPost: false,
           isArchive: false,
-          isTag: false,
+          isTag: true,
           isCategory: false,
           open_in_new: false,
           fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -245,342 +240,101 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-XStream" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2017/04/07/XStream/" class="article-date">
-      <time datetime="2017-04-07T14:22:00.000Z" itemprop="datePublished">2017-04-07</time>
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a href="/2017/04/07/XStream/" class="archive-article-date">
+      <time datetime="2017-04-07T14:22:00.000Z" itemprop="datePublished">04-07</time>
 </a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+        </div>
+         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/07/XStream/">XStream 之 JavaBean 与 XML 相互转换</a>
+      <a class="archive-article-title" href="/2017/04/07/XStream/">XStream 之 JavaBean 与 XML 相互转换</a>
     </h1>
   
 
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近重构老项目，接口返回值为 xml 。不想使用老项目中的方式，遂 google 下，试图寻找一个现成的 JavaBean 与 XML 相互转换的工具。于是就与 XStream 邂逅<br>了。使用之初，也发现了不少问题，于是有了此篇记录。</p>
-<p>#引入<br>maven 引入非常方便，只需要在 <em>pom.xml</em> 引入如下代码</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.thoughtworks.xstream<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xstream<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>不是 maven 工程的需要自行导图 jar 包，<em>xstream-1.4.9.jar</em> (其他版本也是可以的，1.4.9 目前是最新版本)</p>
-<p>#简单的 JavaBean 转 XML</p>
-<p>稍后继续，要开始干活了，半夜压测。。。。。。。。。。。。。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
     <div class="article-category tagcloud">
     <a class="article-category-link" href="/categories/工具代码/">工具代码</a>
     </div>
 
 
-      
+          
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xStream/">xStream</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xml/">xml</a></li></ul>
     </div>
 
-      
-      <div class="clearfix"></div>
-    </div>
-    
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
-  
 </article>
-
-
-
-
-
-
-
-
-
   
-    <article id="post-double-data-source" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/01/04/double-data-source/" class="article-date">
-      <time datetime="2017-01-04T13:30:00.000Z" itemprop="datePublished">2017-01-04</time>
+    
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a href="/2016/07/15/timer-grammar-xml/" class="archive-article-date">
+      <time datetime="2016-07-14T23:00:00.000Z" itemprop="datePublished">07-15</time>
 </a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+        </div>
+         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/04/double-data-source/">Tomcat JDBC Pool 多数据源配置</a>
+      <a class="archive-article-title" href="/2016/07/15/timer-grammar-xml/">定时器语法</a>
     </h1>
   
 
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>多数据源配置示例</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
-      
+          
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDBC/">JDBC</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/timer/">timer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xml/">xml</a></li></ul>
     </div>
 
-      
-        <p class="article-more-link">
-          <a href="/2017/01/04/double-data-source/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
-  
 </article>
-
-
-
-
-
-
-
-
-
   
-    <article id="post-MySQL-truncate-delete" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2016/11/14/MySQL-truncate-delete/" class="article-date">
-      <time datetime="2016-11-14T14:15:00.000Z" itemprop="datePublished">2016-11-14</time>
-</a>
-    </div>
+    </div></section>
   
-  <div class="article-inner">
+
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a>
-    </h1>
-  
 
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。<br>  全量删除数据有两个选择，<br>  1：<code>DELETE FROM table_name</code><br>  2:<code>TRUNCATE TABLE table_name</code>。<br>由于 <strong>TRUNCATE TABLE</strong> 相当于不带 <strong>WHERE</strong> 条件的 <strong>DELETE</strong> 语句，那么不论是选择 <strong>DELETE</strong> 还是选择 <strong>TRUNCATE TABLE</strong> 好像都能达到我删除全量数据的目的。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/11/14/MySQL-truncate-delete/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-spring-task" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/27/spring-task/" class="article-date">
-      <time datetime="2016-09-27T06:55:00.000Z" itemprop="datePublished">2016-09-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/27/spring-task/">Spring 定时器的两种简单实现</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/27/spring-task/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-custom-local-cache" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/22/custom-local-cache/" class="article-date">
-      <time datetime="2016-09-22T12:30:00.000Z" itemprop="datePublished">2016-09-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。<br>今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/22/custom-local-cache/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 </div>
       <footer id="footer">
     <div class="outer">
