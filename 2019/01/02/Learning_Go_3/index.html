@@ -9,20 +9,20 @@
 
   <meta charset="utf-8">
   
-  <title>BufferedReader.readLine() 的使用中遇到的问题 | Apple</title>
+  <title>Go 语言学习笔记（进阶篇） | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。">
-<meta name="keywords" content="Java">
+  <meta name="description" content="并发 &amp;amp; 同步">
+<meta name="keywords" content="go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BufferedReader.readLine() 的使用中遇到的问题">
-<meta property="og:url" content="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/index.html">
+<meta property="og:title" content="Go 语言学习笔记（进阶篇）">
+<meta property="og:url" content="http://blog.xueni.ren/2019/01/02/Learning_Go_3/index.html">
 <meta property="og:site_name" content="Apple">
-<meta property="og:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。">
+<meta property="og:description" content="并发 &amp;amp; 同步">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-02-17T13:39:37.481Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BufferedReader.readLine() 的使用中遇到的问题">
-<meta name="twitter:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。">
+<meta name="twitter:title" content="Go 语言学习笔记（进阶篇）">
+<meta name="twitter:description" content="并发 &amp;amp; 同步">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -244,11 +244,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
 </nav>
-      <div class="body-wrap"><article id="post-BufferedReader-readLine" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Learning_Go_3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/13/BufferedReader-readLine/" class="article-date">
-      <time datetime="2016-06-13T14:15:00.000Z" itemprop="datePublished">2016-06-13</time>
+      <a href="/2019/01/02/Learning_Go_3/" class="article-date">
+      <time datetime="2019-01-02T14:20:00.000Z" itemprop="datePublished">2019-01-02</time>
 </a>
     </div>
   
@@ -261,7 +261,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      BufferedReader.readLine() 的使用中遇到的问题
+      Go 语言学习笔记（进阶篇）
     </h1>
   
 
@@ -270,13 +270,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -286,19 +286,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现<br>单元测试还没有跑完。然后跟断点发现程序阻塞在 <strong>readLine()</strong> 方法上了。</p>
-<a id="more"></a>
-<h2 id="BufferedReader"><a href="#BufferedReader" class="headerlink" title="BufferedReader"></a>BufferedReader</h2><p><strong>BufferedReader</strong> 是由 <strong>Reader</strong> 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 <strong>readLine</strong> 方法，也就是今天<br>我要重点说的那个方法。<strong>BufferReader</strong> 的作用是为 <strong>Reader</strong> 提供缓冲功能。 <strong>readLine</strong> 方法一次读取一个文本行，从字符输入流中读取<br>文本，缓冲各个字符，从而提供字符、数组和行的高效读取。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">   BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(conn.getInputStream()));</span><br><span class="line">           String line = <span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">           System.out.println(¨---here¨);</span><br><span class="line">               sb.append(line);</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
-<p>然后程序就阻塞在了 <strong> while ((line = reader.readLine()) != null)</strong> 这一行。System.out.println(¨—here¨); 这一句始终没有打印。</p>
-<p>那么，程序为什么会阻塞呢？那么我们就需要了解一下 <strong>readLine</strong> 这个<br>方法了。<br><strong>readLine</strong> 是一个阻塞方法，在没有读取到数据的时候并不会返回 <strong>null</strong> 。<strong>readLine</strong> 只有在数据流发生异常时才会返回null值。如果<br>不指定 <strong>buffer</strong> 大小，则<strong> readLine</strong> 的 <strong>buffer</strong> 默认大小是 <strong>8192</strong> 个字符。在没有达到buffer大小之前，只有遇到<strong>“/r”、”/n”、”/r/n”</strong>才会返回。<br>这个时候这个时候，我就在猜想到底是我的图片太小，不足 <strong>8192</strong> 个字符呢？还是说别的什么原因才导致 <strong>readLine</strong> 才没有一直返回。。<br>为了不让程序阻塞，可以设置超时时间，但是这个不是解决问题的最终办法。因为这个 url 上的图片通过浏览器是可以正常访问，且完全<br>可以通过浏览器下载到本地。断点一路跟来，最后锁定问题出在了这一句 <strong>conn.getInputStream()</strong> 因为 <strong>InputStream</strong> 流的原因，导致 <strong>readine</strong> 读不到数据才一直阻塞</p>
-<p>InputStream 我是通过一下方式获取的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HttpURLConnection conn = (HttpURLConnection) <span class="keyword">new</span> URL(picURL).openConnection();</span><br><span class="line">  conn.setRequestProperty(<span class="string">"Accept-Charset"</span>, <span class="string">"utf-8"</span>);</span><br><span class="line">  conn.setRequestProperty(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line"></span><br><span class="line">  conn.setConnectTimeout(timeout * <span class="number">1000</span>);</span><br><span class="line">  conn.setReadTimeout(timeout * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> conn.getInputStream();</span><br></pre></td></tr></table></figure></p>
-<p>看代码似乎没有什么问题，但是通过在控制台打印我发现来，<strong>conn.getContentEncoding()</strong> 的值为 <strong>null</strong> 和 <strong>gzip</strong> 的会导致 <strong>readLine</strong> 阻塞。这个时候问题就有两种解决方案了<br>一种是，在返回 <strong>InputStream</strong> 流的时候进行类型判断，还有一种方案就是换一种图片下载的方式。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>通过在网上查资料，大多数人都建议在使用socket之类的数据流时，要避免使用 <strong>readLine</strong>。</li>
-<li><strong>conn.getInputStream()</strong> 有可能会获取到 gzip 流，我们可以通过 <strong>new GZIPInputStream(conn.getInputStream())</strong> 来解压我们的流。</li>
-</ul>
-
+        <h2 id="并发-amp-同步"><a href="#并发-amp-同步" class="headerlink" title="并发 &amp; 同步"></a>并发 &amp; 同步</h2><a id="more"></a>
+<h2 id="Goroutine"><a href="#Goroutine" class="headerlink" title="Goroutine"></a>Goroutine</h2><h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2>
       
     </div>
     
@@ -306,13 +295,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></p>
+        <p><span>本文标题:</span><a href="/2019/01/02/Learning_Go_3/">Go 语言学习笔记（进阶篇）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
-        <p><span>发布时间:</span>2016-06-13, 22:15:00</p>
+        <p><span>发布时间:</span>2019-01-02, 22:20:00</p>
         <p><span>最后更新:</span>2019-02-17, 21:39:37</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/13/BufferedReader-readLine/" title="BufferedReader.readLine() 的使用中遇到的问题">http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/01/02/Learning_Go_3/" title="Go 语言学习笔记（进阶篇）">http://blog.xueni.ren/2019/01/02/Learning_Go_3/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2019/01/02/Learning_Go_3/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -324,16 +313,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/06/15/google-guava/">
-                    Google Guava Cache 学习笔记
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/06/06/spring-data-mongodb/">
-                    SpringMVC 整合Mongodb
+                <a href="/2018/12/12/Learing_Go_2/">
+                    Go 语言学习笔记（进阶篇）
                 </a>
             </div>
         
@@ -344,7 +327,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BufferedReader"><span class="toc-number">2.</span> <span class="toc-text">BufferedReader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#并发-amp-同步"><span class="toc-number">1.</span> <span class="toc-text">并发 &amp; 同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Goroutine"><span class="toc-number">2.</span> <span class="toc-text">Goroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Channel"><span class="toc-number">3.</span> <span class="toc-text">Channel</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -401,7 +384,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"BufferedReader.readLine() 的使用中遇到的问题　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Go 语言学习笔记（进阶篇）　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -437,15 +420,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/06/15/google-guava/" title="上一篇: Google Guava Cache 学习笔记">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/06/06/spring-data-mongodb/" title="下一篇: SpringMVC 整合Mongodb">
+            <a href="/2018/12/12/Learing_Go_2/" title="下一篇: Go 语言学习笔记（进阶篇）">
                 <i class="fa fa-angle-right"></i>
             </a>
         
